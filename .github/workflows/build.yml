@@ -1,0 +1,29 @@
+name: Build LinkedInUpdateBypass
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Theos
+        uses: Randomblock1/theos-action@v1
+
+      - name: Build
+        run: |
+          make clean
+          make
+
+      - name: Upload dylib
+        uses: actions/upload-artifact@v4
+        with:
+          name: LinkedInUpdateBypass
+          path: .theos/obj/debug/LinkedInUpdateBypass.dylib
